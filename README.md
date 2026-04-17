@@ -6,7 +6,7 @@ A UIKit iOS app demonstrating modern collection view patterns using `UICollectio
 
 | Home Feed | Products |
 |-----------|----------|
-| ![Home](screenshots/home.png) | ![Products](screenshots/products.png) |
+| ![Home](ModernUIKit/screenshots/home.png) | ![Products](ModernUIKit/screenshots/products.png) |
 
 ## What This Project Demonstrates
 
@@ -40,7 +40,8 @@ enum Section: Hashable, Sendable { case banners, categories, products }
 enum Item: Hashable, Sendable {
     case banner(Banner)
     case category(Category)
-    case product(Product)
+    case product(Product)<img width="398" height="845" alt="image" src="https://github.com/user-attachments/assets/25782de3-b9e1-4afa-b1be-acc705e129bb" />
+
 }
 ```
 
