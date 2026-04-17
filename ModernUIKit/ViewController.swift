@@ -85,7 +85,7 @@ class ViewController: UIViewController {
                 section.interGroupSpacing = 8
                 return section
             case 2: // products
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(80))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(100))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 5, bottom: 8, trailing: 5)
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(100))
@@ -130,6 +130,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(cv)
+        self.navigationItem.title = "Shop"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         cv.register(BannerCell.self, forCellWithReuseIdentifier: "bannerCell")
         cv.register(ProductCell.self, forCellWithReuseIdentifier: "productCell")
         cv.register(CategoryCell.self, forCellWithReuseIdentifier: "categoryCell")
@@ -165,6 +167,5 @@ class ViewController: UIViewController {
         }
         
         applySnapshot()
-        self.view.backgroundColor = .red
     }
 }
