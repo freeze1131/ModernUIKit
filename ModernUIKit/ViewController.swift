@@ -28,8 +28,10 @@ class ViewController: UIViewController {
     lazy var dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: cv) { collectionView, indexPath, item in
         switch item {
         case .banner(let banner):
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-            cell.backgroundColor = banner.color
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bannerCell", for: indexPath) as? BannerCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(with: banner)
             return cell
         case .product(let product):
             guard let  cell: ProductCell = collectionView.dequeueReusableCell(withReuseIdentifier: "productCell", for: indexPath) as? ProductCell else {
@@ -107,7 +109,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(cv)
-        cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(BannerCell.self, forCellWithReuseIdentifier: "bannerCell")
         cv.register(ProductCell.self, forCellWithReuseIdentifier: "productCell")
         cv.register(CategoryCell.self, forCellWithReuseIdentifier: "categoryCell")
         cv.translatesAutoresizingMaskIntoConstraints = false
