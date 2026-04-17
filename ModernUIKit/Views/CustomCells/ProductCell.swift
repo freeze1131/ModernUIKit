@@ -23,12 +23,20 @@ class ProductCell: UICollectionViewCell {
     func setupUI(){
         contentView.addSubview(nameLabel)
         contentView.addSubview(priceLabel)
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 8
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOpacity = 0.1
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        contentView.layer.shadowRadius = 4
+        
+        
         
         nameLabel.font = .preferredFont(forTextStyle: .headline)
         nameLabel.textColor = .label
         
         priceLabel.font = .preferredFont(forTextStyle: .caption1)
-        priceLabel.textColor = .secondaryLabel
+        priceLabel.textColor = .systemGreen
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         priceLabel.translatesAutoresizingMaskIntoConstraints = false

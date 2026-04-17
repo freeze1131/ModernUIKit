@@ -36,11 +36,12 @@ class ViewController: UIViewController {
                 return UICollectionViewCell()
             }
             cell.configure(with: product)
-            cell.backgroundColor = .green
             return cell
-        case .category:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-            cell.backgroundColor = .yellow
+        case .category(let category):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as? CategoryCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(with: category)
             return cell
         }
     }
@@ -58,12 +59,14 @@ class ViewController: UIViewController {
                 item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
                 return section
             case 1: // categories
-                let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .estimated(100))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(45))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
                 let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .estimated(100))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
+                section.interGroupSpacing = 8
                 return section
             case 2: // products
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(80))
@@ -106,6 +109,7 @@ class ViewController: UIViewController {
         self.view.addSubview(cv)
         cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         cv.register(ProductCell.self, forCellWithReuseIdentifier: "productCell")
+        cv.register(CategoryCell.self, forCellWithReuseIdentifier: "categoryCell")
         cv.translatesAutoresizingMaskIntoConstraints = false
         
        
