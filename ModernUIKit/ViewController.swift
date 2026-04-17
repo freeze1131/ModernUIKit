@@ -57,6 +57,13 @@ class ViewController: UIViewController {
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(100))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(64))
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )
+                section.boundarySupplementaryItems = [header]
                 section.orthogonalScrollingBehavior = .paging
                 item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
                 return section
@@ -67,6 +74,13 @@ class ViewController: UIViewController {
                 let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .estimated(100))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(64))
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )
+                section.boundarySupplementaryItems = [header]
                 section.orthogonalScrollingBehavior = .continuous
                 section.interGroupSpacing = 8
                 return section
@@ -77,6 +91,13 @@ class ViewController: UIViewController {
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(100))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(64))
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )
+                section.boundarySupplementaryItems = [header]
                 return section
             default:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(100))
@@ -112,6 +133,7 @@ class ViewController: UIViewController {
         cv.register(BannerCell.self, forCellWithReuseIdentifier: "bannerCell")
         cv.register(ProductCell.self, forCellWithReuseIdentifier: "productCell")
         cv.register(CategoryCell.self, forCellWithReuseIdentifier: "categoryCell")
+        cv.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,withReuseIdentifier: SectionHeader.reuseIdentifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         
        
@@ -122,6 +144,26 @@ class ViewController: UIViewController {
             cv.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         cv.dataSource = dataSource
+        
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SectionHeader.reuseIdentifier,
+                for: indexPath
+            ) as? SectionHeader else {
+                return UICollectionReusableView()
+            }
+            
+            switch indexPath.section {
+            case 0: header.configure(with: "Featured")
+            case 1: header.configure(with: "Categories")
+            case 2: header.configure(with: "Products")
+            default: break
+            }
+            
+            return header
+        }
+        
         applySnapshot()
         self.view.backgroundColor = .red
     }
